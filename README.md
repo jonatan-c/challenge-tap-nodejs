@@ -55,5 +55,9 @@ Rutas:
 
 
 POST --> http://localhost:3000/game
+
+
 GET --> http://localhost:3000/game/:id
+
+
 Documentacion SWAGGER -->http://localhost:3000/api/docs
