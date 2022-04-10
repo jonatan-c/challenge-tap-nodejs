@@ -1,0 +1,142 @@
+paths:
+  # GET
+  /game:
+    get:
+      description: "service to retrive all games"
+      tags:
+        - Game
+      summary: "will return a list of existing games"
+      responses:
+        200:
+          $ref: "#/components/responses/getAllGames"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+    # POST
+    post:
+      tags:
+        - Game
+      summary: "Create a new game"
+      description: "add a new game in DB"
+      requestBody:
+        description: "request with values"
+        required: true
+        content:
+              
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateGamePost"
+      responses:
+        200:
+          $ref: "#/components/responses/CreateOneGame"
+
+        500:
+          $ref: "#/components/responses/ServerError"
+   
+    # GET
+  /game/{id}:
+    get:
+      tags:
+        - Game
+      summary: "Returns the game that corresponds with the selected id"
+      description: "This endpoint will return the game that corresponds with the choosen id if it not exist it will create a new game"
+      parameters:
+        - in: path
+          name: id
+          description: "the id of the game you want to see"
+          required: true
+          schema:
+            type: integer
+            example: 3
+      responses:
+        200:
+          $ref: "#/components/responses/getAllGames"
+        500:
+          $ref: "#/components/responses/ServerError"
+
+
+components:
+  # SCHEMAS
+  schemas:
+    CreateGamePost:
+      properties:
+        cells:
+          description: "array with the cells that will be used to create the game"
+          type: string
+          example: "[]"
+        state:
+          type: integer
+          example: 1
+
+
+
+  # Responses
+  responses:
+    getAllGames:
+      description: "it show a one game"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              game:
+                type: array
+              id:
+                code: integer
+                example: 1
+              cells:
+                type: string
+                example: "[]"
+              state:
+                type: object
+                example: {
+                  "code": 1,
+                  "description": "CREATED"
+                }
+              createdAt:
+                type: string
+                example: "2020-05-05T12:00:00.000Z" 
+              updatedAt:
+                type: string
+                example: "2020-05-05T12:00:00.000Z"
+
+    ServerError:
+      description: "Server error"
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              {
+                message: "Error creating game",
+              }
+
+
+    CreateOneGame:
+      description: "it shows a ONE with all the categories"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              game:
+                type: array
+              id:
+                code: integer
+                example: 1
+              cells:
+                type: string
+                example: "[]"
+              state:
+                type: object
+                example: {
+                  "id": 1,
+                  "description": "CREATED"
+                }
+              createdAt:
+                type: string
+                example: "2020-05-05T12:00:00.000Z" 
+              updatedAt:
+                type: string
+                example: "2020-05-05T12:00:00.000Z"
+                
